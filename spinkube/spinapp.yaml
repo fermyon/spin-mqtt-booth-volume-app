@@ -3,7 +3,7 @@ kind: SpinApp
 metadata:
   name: mqtt-booth-volume
 spec:
-  image: "ghcr.io/kate-goldenring/spin-apps/mqtt-booth-volume:latest"
+  image: "ghcr.io/fermyon/spin-mqtt-booth-volume:latest"
   executor: containerd-shim-spin
   replicas: 1
   variables:

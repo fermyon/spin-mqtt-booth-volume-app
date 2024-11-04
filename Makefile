@@ -1,10 +1,10 @@
-SPIN_VARIABLE_MQTT_BROKER_URI ?= "mqtt://localhost:1883"
+SPIN_VARIABLE_MQTT_BROKER_URI ?= "test.mosquitto.org"
 SPIN_VARIABLE_MQTT_TOPIC ?= "booth/+"
-REGISTRY ?= ghcr.io/kate-goldenring/spin-apps/mqtt-booth-volume
-TAG ?= v0.2.0
+REGISTRY ?= ghcr.io/fermyon/spin-mqtt-booth-volume
+TAG ?= latest
 VOLUME ?= 350
 BOOTH ?= 20
-BROKER_HOSTNAME ?= 127.0.0.1
+BROKER_HOSTNAME ?= test.mosquitto.org
 
 all: emqx spin-build-up
 
