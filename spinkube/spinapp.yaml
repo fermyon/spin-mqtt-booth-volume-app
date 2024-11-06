@@ -11,6 +11,10 @@ spec:
     value: mqtt://emqx.default.svc.cluster.local:1883
   - name: mqtt_topic
     value: booth/+
+  - name: mqtt_username
+    value: ""
+  - name: mqtt_password
+    value: ""
   # - name: sqlite_password
   #   value: password
   # - name: sqlite_username

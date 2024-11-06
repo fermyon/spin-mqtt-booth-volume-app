@@ -9,14 +9,16 @@ description = "Triggered by MQTT"
 [variables]
 mqtt_topic = { required = true }
 mqtt_broker_uri = { required = true }
+mqtt_username = { default = "" }
+mqtt_password = { default = "" }
 # sqlite_username = { required = true }
 # sqlite_password = { required = true }
 
 [application.trigger.mqtt]
 # address = "mqtt://localhost:1883"
 address = "{{ mqtt_broker_uri }}"
-username = ""
-password = ""
+username = "{{ mqtt_username }}"
+password = "{{ mqtt_password }}"
 keep_alive_interval = "30" # seconds
 
 [[trigger.mqtt]]
