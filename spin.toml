@@ -9,8 +9,8 @@ description = "Triggered by MQTT"
 [variables]
 mqtt_topic = { required = true }
 mqtt_broker_uri = { required = true }
-sqlite_username = { required = true }
-sqlite_password = { required = true }
+# sqlite_username = { required = true }
+# sqlite_password = { required = true }
 
 [application.trigger.mqtt]
 # address = "mqtt://localhost:1883"
