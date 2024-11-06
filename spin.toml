@@ -17,9 +17,9 @@ mqtt_password = { default = "" }
 [application.trigger.mqtt]
 # address = "mqtt://localhost:1883"
 address = "{{ mqtt_broker_uri }}"
-username = "{{ mqtt_username }}"
-password = "{{ mqtt_password }}"
-keep_alive_interval = "30" # seconds
+username = ""
+password = ""
+keep_alive_interval = "30"        # seconds
 
 [[trigger.mqtt]]
 component = "mqtt-message-persister"
@@ -37,7 +37,7 @@ command = "cargo build --target wasm32-wasi --release --manifest-path mqtt-messa
 watch = ["src/**/*.rs", "Cargo.toml"]
 
 [[trigger.http]]
-route = "/api"
+route = "/api/..."
 component = "api"
 
 [component.api]
