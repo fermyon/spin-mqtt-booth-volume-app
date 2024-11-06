@@ -7,8 +7,8 @@ authors = ["Kate Goldenring <kate.goldenring@fermyon.com>"]
 description = "Triggered by MQTT"
 
 [variables]
-mqtt_topic = { required = true }
-mqtt_broker_uri = { required = true }
+mqtt_topic = { default = "booth/+" }
+mqtt_broker_uri = { default = "test.mosquitto.org" }
 mqtt_username = { default = "" }
 mqtt_password = { default = "" }
 # sqlite_username = { required = true }
