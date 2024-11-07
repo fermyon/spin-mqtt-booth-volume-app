@@ -45,6 +45,13 @@ Now, publish to the topic for booth 20. Set the broker host address to that of y
 mqttx pub -h test.mosquitto.org -t 'booth/20' -p 1883 -m '{"volume": 350}'
 ```
 
+If you're running `emqx` in docker use the following command to publish messages:
+
+```sh
+mqttx pub -h localhost -t 'booth/20' -p 1883 -m '{"volume": 350}'
+```
+
+
 ## Example Sound Sensor
 
 To use a real device with this Spin app, the device must meet the following criteria:

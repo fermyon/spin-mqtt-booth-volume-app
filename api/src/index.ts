@@ -1,15 +1,13 @@
-import { ResponseBuilder , Sqlite, Router} from "@fermyon/spin-sdk";
+import { ResponseBuilder, Sqlite, Router } from "@fermyon/spin-sdk";
+import { getAll, getSubsetByDay, getSubsetByRelativeTime } from "./handlers";
+
+const router = Router();
+
+router.get("/api/", ({ }, _req, res) => getAll(res));
+router.get("/api/today", ({ }, _req, res) => getSubsetByDay("today", res))
+router.get("/api/yesterday", ({ }, _req, res) => getSubsetByDay("yesterday", res))
+router.get("/api/since/:time", ({ params }, _req, res) => getSubsetByRelativeTime(params.time, res))
 
 export async function handler(req: Request, res: ResponseBuilder) {
-  let conn = Sqlite.openDefault();
-  let result = conn.execute("SELECT * FROM noise_log", []);
-  let items = result.rows.map(row => {
-    return {
-        source: row["source"],
-        volume: Number(row["volume"]),
-        timestamp: row["timestamp"],
-    }
-});
-  res.set({ "content-type": "application/json" });
-  res.send(JSON.stringify(items));
+  return await router.handleRequest(req, res, {});
 }
