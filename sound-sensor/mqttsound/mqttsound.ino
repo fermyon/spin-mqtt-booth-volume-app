@@ -1,5 +1,6 @@
 #include "WiFiS3.h"
 #include "arduino_secrets.h"
+#include "mqtt_secrets.h"
 #include <ArduinoMqttClient.h>
 #include <ArduinoJson.h>
 
@@ -8,14 +9,15 @@ int sound_sensor = A2; // Sound sensor should be plugged into pin A2
 char ssid[] = SECRET_SSID;        // your network SSID (name)
 char pass[] = SECRET_PASS;        // your network password (use for WPA, or use as key for WEP)
 
-// char mqtt_user[] = "";
-// char mqtt_pass[] = "";
+char mqtt_user[] = MQTT_CLIENT_USERNAME;
+char mqtt_pass[] = MQTT_CLIENT_PASSWORD;
 
-const char broker[] = "test.mosquitto.org"; // IP address of the MQTT broker.
+const char broker[] = "emqx.demo.fermyon.com"; // IP address of the MQTT broker.
 int        port     = 1883;
 const char publish_topic[]  = "booth/demo"; // Unique topic for the "booth" this sensor is in
-int threshold = 200;
+int threshold = 50;
 int delay_ms = 100;
+int pub_interval_ms = 10000; // Publish the maximum volume heard over 10 seconds
 
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
@@ -31,27 +33,40 @@ void setup() {
 }
 
 void loop() {
+  static unsigned long startTime = millis();  // Track the start time of the 10-second interval
+  static int maxSoundValue = 0;               // Track the maximum sound value over 10 seconds
+
   if (!mqttClient.connected()) {
     reconnectMQTT();  // Reconnect if the connection is lost
   }
-  int soundValue = 0; 
-  for (int i = 0; i < 32; i++) { 
+
+  int soundValue = 0;
+  for (int i = 0; i < 32; i++) {
     // Read the sound sensor
     soundValue += analogRead(sound_sensor);  
-  } 
+  }
 
   soundValue >>= 5; // Bitshift operation
   Serial.println(soundValue);
 
-  // If a value higher than 300 is registered, we will publish the sound level to the MQTT broker
-  if (soundValue > threshold) {
-    // Send data
-    sendVolumeData(soundValue);
+  // Track the maximum sound value within the 10-second window
+  if (soundValue > maxSoundValue) {
+    maxSoundValue = soundValue;
+  }
+
+  // Check if 10 seconds have elapsed
+  if (millis() - startTime >= pub_interval_ms) {
+    // Send the maximum sound value if it exceeds the threshold
+    if (maxSoundValue > threshold) {
+      sendVolumeData(maxSoundValue);
+    }
+    // Reset for the next interval
+    maxSoundValue = 0;
+    startTime = millis();  // Restart the timer
   }
 
   delay(delay_ms); // Delay between sound readings
 }
-
 
 void connectWiFi() {
   Serial.print("Attempting to connect to WPA SSID: ");
@@ -67,7 +82,7 @@ void connectWiFi() {
 
 void connectMQTT() {
   Serial.println("Attempting to connect to the MQTT broker.");
-    // mqttClient.setUsernamePassword(mqtt_user, mqtt_pass);
+  mqttClient.setUsernamePassword(mqtt_user, mqtt_pass);
   while (!mqttClient.connect(broker, port)) {
     Serial.print(".");
     delay(1000);

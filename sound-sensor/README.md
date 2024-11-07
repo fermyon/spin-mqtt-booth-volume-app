@@ -16,11 +16,12 @@ The [`mqttsound`](./sound-sensor/mqttsound) folder contains an Anduino program t
 
 Before uploading the program to your device, be sure to do the following:
 1. Add the netword SSID (name) and password to [`arduino_secrets.h`](./mqttsound/arduino_secrets.h)
+1. Set username and password credentials for your MQTT broker in [`mqtt_secrets.h`](./mqttsound/mqtt_secrets.h)
 1. Configure constants in the [arduino sketch](./mqttsound/mqttsound.ino):
     1. Set the address and port for your MQTT broker. Defaults to the [public Mosquitto broker](https://test.mosquitto.org/) at host `test.mosquitto.org` and port `1883`.
     1. Configure the MQTT topic for the device. Defaults to `booth/demo`.
     1. Configure the sound threshold for the device. Any volume above this threshold is published. Defaults to 200.
-1. If using a broker that requires authentication, be sure to set a username and password in the sketch and uncomment the line that does authentication.
+1. If using a broker that does not require authentication, be sure to comment out `mqttClient.setUsernamePassword(mqtt_user, mqtt_pass);` in the sketch.
 
 ### Troubleshooting Arduino Uno
 
