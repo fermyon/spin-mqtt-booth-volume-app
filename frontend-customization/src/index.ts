@@ -3,23 +3,23 @@ import { ResponseBuilder } from "@fermyon/spin-sdk";
 const data = {
     "demo.fermyon.com": {
         qr: "fermyon",
-        footer: "Made with ❤️  by Fermyon and it’s partners",
+        footer: "Made with ❤️ by Fermyon and its partners",
         raffle: "possum"
     },
     "ampere.demo.fermyon.com": {
         qr: "ampere",
-        footer: "Made with ❤️  by Ampere and Fermyon",
+        footer: "Made with ❤️ by Ampere and Fermyon",
         raffle: "zebra"
     },
     "akamai.demo.fermyon.com": {
         qr: "akamai",
-        footer: "Made with ❤️  by Akamai and Fermyon",
+        footer: "Made with ❤️ by Akamai and Fermyon",
         raffle: "giraffe"
     },
     "azure.demo.fermyon.com": {
         qr: "azure",
-        footer: "Made with ❤️  by Azure and Fermyon",
-        raffle: "goppher"
+        footer: "Made with ❤️ by Azure and Fermyon",
+        raffle: "gopher"
     },
 }
 
