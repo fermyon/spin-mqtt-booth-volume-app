@@ -80,12 +80,12 @@ environment = { DESTINATION = "/index.html", STATUSCODE = "301" }
 
 [[trigger.http]]
 route = "/index.html"
-component = "personalization-rust"
+component = "frontend-personalization"
 
-[component.personalization-rust]
-source = "personalization-rust/target/wasm32-wasi/release/personalization_rust.wasm"
+[component.frontend-personalization]
+source = "frontend-personalization/target/wasm32-wasi/release/frontend_personalization.wasm"
 allowed_outbound_hosts = ["*://self:*"]
-[component.personalization-rust.build]
+[component.frontend-personalization.build]
 command = "cargo build --target wasm32-wasi --release"
-workdir = "personalization-rust"
+workdir = "frontend-personalization"
 watch = ["src/**/*.rs", "Cargo.toml"]

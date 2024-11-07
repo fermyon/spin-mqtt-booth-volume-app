@@ -52,7 +52,7 @@ fn get_data_map() -> HashMap<String, Data> {
 }
 
 #[http_component]
-async fn handle_personalization_rust(req: Request) -> Result<impl IntoResponse> {
+async fn handle_frontend_personalization(req: Request) -> Result<impl IntoResponse> {
     let resp: Response = spin_sdk::http::send(Request::get("/_index.html")).await?;
     // read response to string
     let mut html = String::new();

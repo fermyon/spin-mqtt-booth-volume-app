@@ -1,5 +1,5 @@
 [package]
-name = "personalization-rust"
+name = "frontend-personalization"
 authors = ["karthik2804 <karthik.ganeshram@fermyon.com>"]
 description = ""
 version = "0.1.0"
