@@ -1,12 +1,10 @@
-
-document.addEventListener('DOMContentLoaded', () => {
-    requestData("all")
+const setup = () => {
+    requestData("today")
     const timeRangeElement = document.getElementById("timeRange");
     timeRangeElement.addEventListener('change', () => {
         requestData(timeRangeElement.value);
     }, false);
-
-}, false);
+}
 
 const getUrl = (range) => {
     if (!range || range === "all") {
@@ -87,4 +85,8 @@ const requestData = (range) => {
                 }
             });
         });
-}
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    setup();
+}, false);
