@@ -70,18 +70,6 @@ files = [{ source = "frontend/", destination = "/" }]
 # sqlite_password = "{{ sqlite_password }}"
 
 [[trigger.http]]
-route = "/index.html"
-component = "frontend-customization"
-
-[component.frontend-customization]
-source = "frontend-customization/target/frontend-customization.wasm"
-allowed_outbound_hosts = ["https://frontend.spin.internal"]
-
-[component.frontend-customization.build]
-command = "npm run build"
-workdir = "frontend-customization"
-
-[[trigger.http]]
 route = "/"
 component = "redirect-index"
 
@@ -89,3 +77,15 @@ component = "redirect-index"
 
 source = { url = "https://github.com/fermyon/spin-redirect/releases/download/v0.1.0/redirect.wasm", digest = "sha256:8bee959843f28fef2a02164f5840477db81d350877e1c22cb524f41363468e52" }
 environment = { DESTINATION = "/index.html", STATUSCODE = "301" }
+
+[[trigger.http]]
+route = "/index.html"
+component = "personalization-rust"
+
+[component.personalization-rust]
+source = "personalization-rust/target/wasm32-wasi/release/personalization_rust.wasm"
+allowed_outbound_hosts = ["*://self:*"]
+[component.personalization-rust.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "personalization-rust"
+watch = ["src/**/*.rs", "Cargo.toml"]
