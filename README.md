@@ -32,7 +32,7 @@ mqttx sub  -h '127.0.0.1' -t "/booth/20" -p 1883
 Now, that our broker is running, we can start our Spin app, setting the broker URI to be our locally running broker. We will also listen for all messages posted to a topic that matches `booth/+`. The `+` sign is a single-level wildcard that will match any string in place of the wildcard, i.e. `booth/20` but not `booth/20/b`.
 
 ```sh
-SPIN_VARIABLE_SQLITE_USERNAME="" SPIN_VARIABLE_SQLITE_PASSWORD="" SPIN_VARIABLE_MQTT_BROKER_URI="mqtt://localhost:1883" SPIN_VARIABLE_MQTT_TOPIC="booth/+" spin build --up --sqlite @mqtt-message-persister/migration.up.sql
+SPIN_VARIABLE_MQTT_BROKER_URI="mqtt://localhost:1883" SPIN_VARIABLE_MQTT_TOPIC="booth/+" spin build --up --sqlite @mqtt-message-persister/migration.up.sql
 ```
 
 ## Publishing Messages from a Fake Device
