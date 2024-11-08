@@ -1,3 +1,4 @@
+use anyhow::Context;
 use chrono::{DateTime, Utc};
 use spin_mqtt_sdk::{mqtt_component, Metadata, Payload};
 use spin_sdk::sqlite::{Connection, Value};
@@ -34,7 +35,7 @@ async fn handle_message(message: Payload, metadata: Metadata) -> anyhow::Result<
         connection.execute(
             "INSERT INTO noise_log (source, volume, timestamp) VALUES (?, ?, ?)",
             execute_params.as_slice(),
-        )?;
+        ).context("failed to insert entry into noise_log")?;
     }
     Ok(())
 }
