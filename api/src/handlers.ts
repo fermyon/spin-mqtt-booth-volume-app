@@ -33,10 +33,15 @@ const getSubsetByRelativeTime = (relativeTimeExpression: string, res: ResponseBu
         res.send()
         return;
     }
-    let conn = Sqlite.openDefault();
-    let result = conn.execute(sqlSelectSubset, [filter]);
-    let items = result.rows.map(row => { return asNoiseLogItem(row) });
-    sendJson(res, items)
+    try {
+        let conn = Sqlite.openDefault();
+        let result = conn.execute(sqlSelectSubset.replace('$1', '\'' + filter + '\''), []);
+        let items = result.rows.map(row => { return asNoiseLogItem(row) });
+        sendJson(res, items)
+    } catch (e: any) {
+        console.log(e);
+        console.log(e.payload);
+    }
 }
 
 const getAll = (res: ResponseBuilder) => {
