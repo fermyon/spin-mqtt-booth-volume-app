@@ -23,20 +23,29 @@ const getSubsetByDay = (dayString: string, res: ResponseBuilder) => {
     } catch (e: any) {
         console.log(e);
         console.log(e.payload);
+        res.status(500);
+        res.send();
     }
 
 }
 const getSubsetByRelativeTime = (relativeTimeExpression: string, res: ResponseBuilder) => {
     let filter = getRelativeDate(relativeTimeExpression);
     if (filter == "") {
-        res.status(400)
-        res.send()
+        res.status(400);
+        res.send();
         return;
     }
-    let conn = Sqlite.openDefault();
-    let result = conn.execute(sqlSelectSubset, [filter]);
-    let items = result.rows.map(row => { return asNoiseLogItem(row) });
-    sendJson(res, items)
+    try {
+        let conn = Sqlite.openDefault();
+        let result = conn.execute(sqlSelectSubset.replace('$1', '\'' + filter + '\''), []);
+        let items = result.rows.map(row => { return asNoiseLogItem(row) });
+        sendJson(res, items)
+    } catch (e: any) {
+        console.log(e);
+        console.log(e.payload);
+        res.status(500);
+        res.send();
+    }
 }
 
 const getAll = (res: ResponseBuilder) => {
