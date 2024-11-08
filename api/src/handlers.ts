@@ -15,10 +15,15 @@ const getSubsetByDay = (dayString: string, res: ResponseBuilder) => {
         res.send()
         return;
     }
-    let conn = Sqlite.openDefault();
-    let result = conn.execute(sqlSelectSubsetByDay, [d]);
-    let items = result.rows.map(row => { return asNoiseLogItem(row) });
-    sendJson(res, items)
+    try {
+        let conn = Sqlite.openDefault();
+        let result = conn.execute(sqlSelectSubsetByDay.replace('$1', '\'' + d + '\''), []);
+        let items = result.rows.map(row => { return asNoiseLogItem(row) });
+        sendJson(res, items)
+    } catch (e: any) {
+        console.log(e);
+        console.log(e.payload);
+    }
 
 }
 const getSubsetByRelativeTime = (relativeTimeExpression: string, res: ResponseBuilder) => {
