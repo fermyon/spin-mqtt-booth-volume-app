@@ -17,8 +17,8 @@ mqtt_password = { default = "" }
 [application.trigger.mqtt]
 # address = "mqtt://localhost:1883"
 address = "{{ mqtt_broker_uri }}"
-username = ""
-password = ""
+username = "{{ mqtt_username }}"
+password = "{{ mqtt_password }}"
 keep_alive_interval = "30"        # seconds
 
 [[trigger.mqtt]]
