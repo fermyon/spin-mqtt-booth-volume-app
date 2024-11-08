@@ -68,3 +68,24 @@ files = [{ source = "frontend/", destination = "/" }]
 # [component.sqlite-explorer.variables]
 # sqlite_username = "{{ sqlite_username }}"
 # sqlite_password = "{{ sqlite_password }}"
+
+[[trigger.http]]
+route = "/"
+component = "redirect-index"
+
+[component.redirect-index]
+
+source = { url = "https://github.com/fermyon/spin-redirect/releases/download/v0.1.0/redirect.wasm", digest = "sha256:8bee959843f28fef2a02164f5840477db81d350877e1c22cb524f41363468e52" }
+environment = { DESTINATION = "/index.html", STATUSCODE = "301" }
+
+[[trigger.http]]
+route = "/index.html"
+component = "frontend-personalization"
+
+[component.frontend-personalization]
+source = "frontend-personalization/target/wasm32-wasi/release/frontend_personalization.wasm"
+allowed_outbound_hosts = ["*://self:*"]
+[component.frontend-personalization.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "frontend-personalization"
+watch = ["src/**/*.rs", "Cargo.toml"]

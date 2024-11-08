@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booth Volume Level</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Booth Volume Level</h1>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <!-- Graph (left side) -->
+        <div class="graph-container">
+          <form>
+            <label for="timeRange">Select Time Range:</label>
+            <select id="timeRange">
+              <option selected value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="since/1h">Last Hour</option>
+              <option value="since/30min">Last 30 Mins</option>
+              <option value="since/5min">Last 5 Mins</option>
+              <option value="all">All Time</option>
+            </select>
+          </form>
+          <canvas id="volumeChart"></canvas>
+        </div>
+        <div class="info-section">
+          <div class="qr-code">
+            <div class="qr-text">Prize Raffle</div>
+            <img
+              src="/images/{{RAFFLE_PROVIDER}}-raffle.png"
+              alt="{{RAFFLE_PROVIDER}} QR CODE"
+              class="qr-image"
+            />
+            <a
+              href="https://fibsu0jcu2g.typeform.com/to/i9uFTyVY#booth_id={{RAFFLE_ANIMAL}}"
+              class="qr-link"
+              >Click to enter raffle</a
+            >
+          </div>
+
+          <div class="architecture-diagram">
+            <h2>Learn more about the architecture</h2>
+            <a href="/images/architecture.png"
+              >"<img
+                src="/images/architecture.png"
+                alt="System Architecture Diagram"
+                class="architecture-image"
+            /></a>
+            <a
+              href="https://github.com/fermyon/mqtt-sample"
+              class="architecture-link"
+              >https://github.com/fermyon/spin-mqtt-booth-volume-app</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; {{FOOTER_CONTENT}}</p>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>
