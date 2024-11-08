@@ -23,14 +23,16 @@ const getSubsetByDay = (dayString: string, res: ResponseBuilder) => {
     } catch (e: any) {
         console.log(e);
         console.log(e.payload);
+        res.status(500);
+        res.send();
     }
 
 }
 const getSubsetByRelativeTime = (relativeTimeExpression: string, res: ResponseBuilder) => {
     let filter = getRelativeDate(relativeTimeExpression);
     if (filter == "") {
-        res.status(400)
-        res.send()
+        res.status(400);
+        res.send();
         return;
     }
     try {
@@ -41,6 +43,8 @@ const getSubsetByRelativeTime = (relativeTimeExpression: string, res: ResponseBu
     } catch (e: any) {
         console.log(e);
         console.log(e.payload);
+        res.status(500);
+        res.send();
     }
 }
 
