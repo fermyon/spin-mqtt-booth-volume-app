@@ -1,0 +1,19 @@
+[package]
+name = "api"
+authors = ["Kate Goldenring <kate.goldenring@fermyon.com>"]
+description = "Backend API"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow = "1"
+spin-sdk = "3.0.1"
+serde_json = "1.0"
+serde = { version = "1", features = ["derive"] }
+chrono = "0.4"
+regex = "1.5"
+
+[workspace]
